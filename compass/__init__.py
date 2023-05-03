@@ -1,8 +1,22 @@
 """
-Compass Data Structures
-~~~~~~~~~~~~~~~~~~~~~~~
-:copyright: (c) 2021-present ster
-:license: GPL-3.0, see LICENSE for more details.
+A library that provides Compass Data Structures
+
+The GNU General Public License v3.0 (GPL-3.0)
+
+Copyright (C) 2021-present ster <ster.physics@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 """
 
@@ -10,39 +24,4 @@ __title__ = "compass"
 __author__ = "ster"
 __license__ = "GPL-3.0"
 __copyright__ = "Copyright 2021-present ster"
-__version__ = "1.1.2"
-
-__all__ = (
-    "Activation",
-    "Attribute",
-    "Card",
-    "CardData",
-    "Collabo",
-    "Hero",
-    "HeroData",
-    "Locale",
-    "Parameter",
-    "Rank",
-    "Rarity",
-    "Role",
-    "Stage",
-    "StageData",
-    "Status",
-    "Tstr",
-    "similar",
-    "translator",
-)
-
-
-from .activation import Activation
-from .attribute import Attribute
-from .card import Card
-from .collabo import Collabo
-from .data import CardData, HeroData, StageData
-from .hero import Hero
-from .rank import Rank
-from .rarity import Rarity
-from .role import Role
-from .stage import Stage
-from .status import Parameter, Status
-from .utils import Locale, Tstr, similar, translator
+__version__ = "1.2.0a"
