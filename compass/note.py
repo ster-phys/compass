@@ -20,35 +20,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-from __future__ import annotations
-
 __all__ = (
-    "CONFIG",
+    "Note",
 )
 
 
-class _Config(object):
-    class _Size(object):
-        @property
-        def ICON(self) -> tuple[int, int]:
-            """Hero icon size."""
-            return (122, 122)
+from enum import Enum
 
-        @property
-        def HERO(self) -> tuple[int, int]:
-            """Hero image size."""
-            return (161, 161)
 
-        @property
-        def CARD(self) -> tuple[int, int]:
-            """Card image size."""
-            return (180, 250)
+class Note(str, Enum):
+    """Note for the card."""
 
-        @property
-        def STAGE(self) -> tuple[int, int]:
-            """Stage image size."""
-            return (736, 276)
+    NONE = ""
+    SEASON = _("シーズン報酬") # type: ignore
+    EVENT = _("イベント") # type: ignore
+    NORMAL = _("通常") # type: ignore
+    COLLABO = _("コラボ") # type: ignore
 
-    SIZE = _Size()
-
-CONFIG = _Config()
+    def __str__(self) -> str:
+        return self.value

@@ -26,42 +26,34 @@ __all__ = (
 
 
 from enum import Enum
+from typing import TypeVar
 
-from typing_extensions import Self
 
-_rarity_order = ("UR","SR","R","N",)
+Self = TypeVar("Self", bound="Rarity")
+
+_rarity_order = ("N", "R", "SR", "UR",)
+
 
 class Rarity(str, Enum):
     """Rarity of the card."""
-    def __new__(cls, value: str) -> Self:
-        self = str.__new__(cls, value)
-        self._value_ = str(value)
-        cls._value2member_map_.update({value.upper(): self})
-        return self
 
-    UR = ("ur",)
-    SR = ("sr",)
-    R = ("r",)
-    N = ("n",)
+    UR = "UR"
+    SR = "SR"
+    R = "R"
+    N = "N"
 
     def __str__(self) -> str:
-        return self.name
+        return self.value
 
-    def __eq__(self, __x: Self | str) -> bool:
-        return super().__eq__(__x.lower())
+    def __lt__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        return _rarity_order.index(self.value) < _rarity_order.index(obj.value)
 
-    def __ne__(self, __x: Self | str) -> bool:
-        return not self.__eq__(__x)
+    def __le__(self, obj: str | Self) -> bool:
+        return self.__lt__(obj) or self.__eq__(obj)
 
-    def __lt__(self, __x: Self | str) -> bool:
-        __x = self.__class__(__x.lower())
-        return _rarity_order.index(self.name) < _rarity_order.index(__x.name)
+    def __gt__(self, obj: str | Self) -> bool:
+        return not self.__le__(obj)
 
-    def __le__(self, __x: Self | str) -> bool:
-        return self.__lt__(__x) or self.__eq__(__x)
-
-    def __gt__(self, __x: Self | str) -> bool:
-        return not self.__le__(__x)
-
-    def __ge__(self, __x: Self | str) -> bool:
-        return not self.__lt__(__x)
+    def __ge__(self, obj: str | Self) -> bool:
+        return not self.__lt__(obj)

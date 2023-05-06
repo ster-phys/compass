@@ -25,3 +25,25 @@ __author__ = "ster"
 __license__ = "GPL-3.0"
 __copyright__ = "Copyright 2021-present ster"
 __version__ = "1.2.0a"
+
+
+from .utils import _install_default_translator
+
+_install_default_translator()
+
+
+from .activation import Activation
+from .attribute import Attribute
+from .card import Card
+from .data import CardData, HeroData, StageData
+from .hero import Hero
+from .note import Note
+from .rank import Rank
+from .rarity import Rarity
+from .role import Role
+from .stage import Stage
+from .status import Parameter, Status
+from .utils import get_translator
+
+
+del _install_default_translator

@@ -27,29 +27,14 @@ __all__ = (
 
 from enum import Enum
 
-from typing_extensions import Self
 
-from .utils import Locale, Tstr
+class Role(str, Enum):
+    """Role of the hero."""
 
-
-class Role(Tstr, Enum):
-    """Role of the Hero."""
-    def __new__(cls, val: str, ja: str, tw: str, en: str) -> Self:
-        kwargs = {
-            Locale.japanese.value: ja,
-            Locale.taiwan_chinese.value: tw,
-            Locale.american_english.value: en,
-            Locale.british_english.value: en,
-        }
-        self = Tstr.__new__(cls, val, **kwargs)
-        self._value_ = Tstr(val, **kwargs)
-        cls._value2member_map_.update({val: self, ja: self, tw: self, en: self})
-        return self
-
-    ATTACKER = ("atk", "アタッカー", "戰士", "attacker")
-    SPRINTER = ("spr", "スプリンター", "快跑手", "sprinter")
-    GUNNER = ("gun", "ガンナー", "狙擊手", "gunner")
-    TANK = ("tnk", "タンク", "坦克", "tank")
+    ATTACKER = _("アタッカー") # type: ignore
+    SPRINTER = _("スプリンター") # type: ignore
+    GUNNER = _("ガンナー") # type: ignore
+    TANK = _("タンク") # type: ignore
 
     def __str__(self) -> str:
-        return self.value.__str__()
+        return self.value

@@ -26,71 +26,42 @@ __all__ = (
 
 
 from enum import Enum
-
-from typing_extensions import Self
-
-from .utils import Locale, Tstr
+from typing import TypeVar
 
 
-class Attribute(Tstr, Enum):
-    """Attributes of the card."""
-    def __new__(cls, ja_tw: str, en: str) -> Self:
-        kwargs = {
-            Locale.japanese.value: ja_tw,
-            Locale.taiwan_chinese.value: ja_tw,
-            Locale.american_english.value: en,
-            Locale.british_english.value: en,
-        }
-        self = Tstr.__new__(cls, **kwargs)
-        self._value_ = Tstr(**kwargs)
-        cls._value2member_map_.update({ja_tw: self, en: self})
-        return self
+Self = TypeVar("Self", bound="Attribute")
 
-    WATER = ("水", "water")
-    FIRE = ("火", "fire")
-    WOOD = ("木", "wood")
+
+class Attribute(str, Enum):
+    """Attribute of the card."""
+
+    WATER = _("水") # type: ignore
+    FIRE = _("火") # type: ignore
+    WOOD = _("木") # type: ignore
 
     def __str__(self) -> str:
-        return self.value.__str__()
+        return self.value
 
-    def __lt__(self, __x: Self | str | Tstr) -> bool:
-        return str(self) == "水" and str(__x) == "木" or \
-               str(self) == "木" and str(__x) == "火" or \
-               str(self) == "火" and str(__x) == "水"
+    def __lt__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        return (self, obj) in [(self.WATER, self.WOOD), (self.WOOD, self.FIRE),
+                               (self.FIRE, self.WATER),]
 
-    def __le__(self, __x: Self | str | Tstr) -> bool:
-        return self.__lt__(__x) or self.__eq__(__x)
+    def __le__(self, obj: str | Self) -> bool:
+        return self.__lt__(obj) or self.__eq__(obj)
 
-    def __gt__(self, __x: Self | str | Tstr) -> bool:
-        return not self.__le__(__x)
+    def __gt__(self, obj: str | Self) -> bool:
+        return not self.__le__(obj)
 
-    def __ge__(self, __x: Self | str | Tstr) -> bool:
-        return not self.__lt__(__x)
-
-    @property
-    def related_terms(self) -> list[str]:
-        """Returns related words.
-
-        Returns
-        -------
-        List[:class:`str`]
-            List of strings which element is another way of saying
-            the attribute.
-
-        """
-        d = {
-            "水": ["水", "青", "藍",],
-            "木": ["木", "緑",],
-            "火": ["火", "赤", "紅",],
-        }
-        return d[str(self)]
+    def __ge__(self, obj: str | Self) -> bool:
+        return not self.__lt__(obj)
 
     @property
     def color(self) -> int:
-        """Gets this attribute color."""
-        if str(self) == "水":
-            return 0x0D1BCE
-        elif str(self) == "火":
-            return 0xE7382A
-        else: # str(self) == "木"
-            return 0x59B93A
+        """Obtains this attribute color."""
+        d = {
+            self.WATER: 0x0D1BCE,
+            self.FIRE: 0xE7382A,
+            self.WOOD: 0x59B93A
+        }
+        return d[self]
