@@ -27,28 +27,13 @@ __all__ = (
 
 from enum import Enum
 
-from typing_extensions import Self
 
-from .utils import Locale, Tstr
-
-
-class Activation(Tstr, Enum):
+class Activation(str, Enum):
     """Activation time of the card."""
-    def __new__(cls, ja_tw: str, en: str) -> Self:
-        kwargs = {
-            Locale.japanese.value: ja_tw,
-            Locale.taiwan_chinese.value: ja_tw,
-            Locale.american_english.value: en,
-            Locale.british_english.value: en,
-        }
-        self = Tstr.__new__(cls, **kwargs)
-        self._value_ = Tstr(**kwargs)
-        cls._value2member_map_.update({ja_tw: self, en: self})
-        return self
 
-    LONG = ("長", "long")
-    SHORT = ("短", "short")
-    NONE = ("無", "none")
+    LONG = _("長") # type: ignore
+    SHORT = _("短") # type: ignore
+    NONE = _("無") # type: ignore
 
     def __str__(self) -> str:
-        return self.value.__str__()
+        return self.value

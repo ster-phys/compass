@@ -26,102 +26,57 @@ __all__ = (
 
 
 from enum import Enum
-from typing import Callable
-
-from typing_extensions import Self
+from typing import TypeVar
 
 
-def precompare(check_collabo: bool = True):
-    """
-    Decorator to enable comparisons to be made even when
-    there are slight notational distortions.
+Self = TypeVar("Self", bound="Rank")
 
-    Parameters
-    ----------
-    check_collabo: :class:`bool`
-        Sets this variable to ``True`` if returns ``False``
-        when the collaboration rank is included.
+_rank_order = ("F", "E", "D", "C", "B", "A", "S1",)
 
-    """
-
-    def _precompare(function: Callable[..., bool]):
-        def wrapper(self: function.__class__, __x: object):
-            __x = Rank("s") if __x.lower() == "s1" else Rank(__x.lower())
-            if check_collabo and (self.is_collabo or __x.is_collabo):
-                return False
-            return function(self, __x)
-        return wrapper
-    return _precompare
-
-_rank_order = ("F","E","D","C","B","A","S1",)
 
 class Rank(str, Enum):
     """Available rank of the card."""
-    # rank
-    S1 = "s"
-    A = "a"
-    B = "b"
-    C = "c"
-    D = "d"
-    E = "e"
-    F = "f"
+    # normal
+    S1 = "S1"
+    A = "A"
+    B = "B"
+    C = "C"
+    D = "D"
+    E = "E"
+    F = "F"
 
     # others
-    EX = "ex"
-
-    # collaboration
-    BL = "bl"
-    BUNSUTO = "bunsuto"
-    DANMACHI = "danmachi"
-    DANRON = "danron"
-    FATE = "fate"
-    FF = "ff"
-    GG = "gg"
-    HAKKA = "hakka"
-    KABUKI = "kabuki"
-    KONOSUBA = "konosuba"
-    KYOJIN = "kyojin"
-    MIKU = "miku"
-    NA = "na"
-    NEKOMIYA = "nekomiya"
-    OL = "ol"
-    P5 = "p5"
-    REF = "ref"
-    REZERO = "rezero"
-    RYZA = "ryza"
-    SAO = "sao"
-    SATSUTEN = "satsuten"
-    SF = "sf"
-    SG = "sg"
-    TENSURA = "tensura"
+    EVENT = _("イベント") # type: ignore
+    COLLABO = _("コラボガチャ") # type: ignore
+    SEASON = _("シーズン報酬") # type: ignore
 
     def __str__(self) -> str:
-        return self.name
+        return self.value
 
     @property
     def is_collabo(self) -> bool:
-        return self.name not in _rank_order
+        return self.value not in _rank_order
 
-    @precompare(check_collabo=False)
-    def __eq__(self, __x: Self | str) -> bool:
-        return super().__eq__(__x)
+    def __lt__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        if self.is_collabo or obj.is_collabo:
+            return False
+        return _rank_order.index(self.value) < _rank_order.index(obj.value)
 
-    @precompare(check_collabo=False)
-    def __ne__(self, __x: Self | str) -> bool:
-        return not self.__eq__(__x)
+    def __le__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        if self.is_collabo or obj.is_collabo:
+            return False
+        return _rank_order.index(self.value) <= _rank_order.index(obj.value)
 
-    @precompare(check_collabo=True)
-    def __lt__(self, __x: Self | str) -> bool:
-        return _rank_order.index(self.name) < _rank_order.index(__x.name)
+    def __gt__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        if self.is_collabo or obj.is_collabo:
+            return False
+        return _rank_order.index(self.value) > _rank_order.index(obj.value)
 
-    @precompare(check_collabo=True)
-    def __le__(self, __x: Self | str) -> bool:
-        return self.__lt__(__x) or self.__eq__(__x)
-
-    @precompare(check_collabo=True)
-    def __gt__(self, __x: Self | str) -> bool:
-        return not self.__le__(__x)
-
-    @precompare(check_collabo=True)
-    def __ge__(self, __x: Self | str) -> bool:
-        return not self.__lt__(__x)
+    def __ge__(self, obj: str | Self) -> bool:
+        obj = self.__class__(obj)
+        if self.is_collabo or obj.is_collabo:
+            return False
+        return _rank_order.index(self.value) >= _rank_order.index(obj.value)

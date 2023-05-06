@@ -21,98 +21,141 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 __all__ = (
-    "PATH",
+    "path",
 )
 
 
-import os
-
-from .activation import Activation
-from .rarity import Rarity
-from .utils import Locale
+from os.path import abspath, dirname
+from typing import Literal
 
 
-class _Path(object):
+_ROOTPATH = dirname(abspath(__file__))
+
+_COMPASS_DATA = f"{_ROOTPATH}/compass-data"
+
+_CPS_DATA = f"{_COMPASS_DATA}/data"
+_CPS_IMG = f"{_COMPASS_DATA}/img"
+
+_DATA = f"{_ROOTPATH}/data"
+_FONT = f"{_ROOTPATH}/font"
+_IMG = f"{_ROOTPATH}/img"
+
+_DECK_IMG = f"{_IMG}/deck"
+_DETAIL_IMG = f"{_IMG}/detail"
+
+
+class Path(object):
     """Class defining paths for the data used by this library."""
 
-    _ROOTPATH = os.path.dirname(os.path.abspath(__file__))
-    _IMGS = f"{_ROOTPATH}/images"
-    _DATA = f"{_ROOTPATH}/data"
-    _TRANS = f"{_ROOTPATH}/trans"
-    _FONTS = f"{_ROOTPATH}/fonts"
+    def card_data_dir(self) -> str:
+        """Path to card data directory."""
+        return f"{_CPS_DATA}/card"
 
-    CARDIMG = f"{_IMGS}/card"
-    ICONIMG = f"{_IMGS}/icon"
-    HEROIMG = f"{_IMGS}/hero"
-    STAGEIMG = f"{_IMGS}/stage"
+    def card_data(self, num: int) -> str:
+        """Path to card data."""
+        return f"{self.card_data_dir()}/{num}.json"
 
-    CARDJSON = f"{_DATA}/card.json.fernet"
-    HEROJSON = f"{_DATA}/hero.json.fernet"
-    STAGEJSON = f"{_DATA}/stage.json.fernet"
+    def hero_data_dir(self) -> str:
+        """Path to hero data directory."""
+        return f"{_CPS_DATA}/hero"
 
-    _EN_TRANS = f"{_TRANS}/en"
-    _TW_TRANS = f"{_TRANS}/zh-TW"
+    def hero_data(self, num: int) -> str:
+        """Path to hero data."""
+        return f"{self.hero_data_dir()}/{num}.json"
 
-    EN_CARDJSON = f"{_EN_TRANS}/card.json"
-    EN_HEROJSON = f"{_EN_TRANS}/hero.json"
-    EN_STAGEJSON = f"{_EN_TRANS}/stage.json"
+    def stage_data_dir(self) -> str:
+        """Path to stage data directory."""
+        return f"{_CPS_DATA}/stage"
 
-    TW_CARDJSON = f"{_TW_TRANS}/card.json"
-    TW_HEROJSON = f"{_TW_TRANS}/hero.json"
-    TW_STAGEJSON = f"{_TW_TRANS}/stage.json"
+    def stage_data(self, num: int) -> str:
+        """Path to stage data."""
+        return f"{self.stage_data_dir()}/{num}.json"
 
-    JP_FONT = f"{_FONTS}/NotoSansJP-Bold.otf"
-    TW_FONT = f"{_FONTS}/NotoSansTC-Bold.otf"
 
-    class _Deck(object):
+    def card_img(self, num: int) -> str:
+        """Path to card image."""
+        return f"{_CPS_IMG}/card/{num}.png"
+
+    def hero_img(self, num: int) -> str:
+        """Path to hero image."""
+        return f"{_CPS_IMG}/hero/{num}.png"
+
+    def icon_img(self, num: int) -> str:
+        """Path to icon image."""
+        return f"{_CPS_IMG}/icon/{num}.png"
+
+    def stage_img(self, num: int) -> str:
+        """Path to stage image."""
+        return f"{_CPS_IMG}/stage/{num}.png"
+
+    @property
+    def abbs_data(self) -> str:
+        """Path to the file where the abbreviation is stored."""
+        return f"{_DATA}/abbreviations.json"
+
+
+    def font(self, locale: Literal["ja", "zh-TW"] = "ja") -> str:
+        """Path to font file."""
+        sub = "TC" if locale == "zh-TW" else "JP"
+        return f"{_FONT}/NotoSans{sub}-Bold.otf"
+
+
+    class Deck(object):
         """Path of images for generating deck image."""
 
-        def __init__(self, _IMGS: str) -> None:
-            self.DECKIMG = f"{_IMGS}/deck"
-
-        def frame(self, position: str, locale: Locale = Locale.japanese) -> str:
-            locale = Locale(locale)
-            add = ".tw" if locale == Locale.taiwan_chinese else ""
-            return f"{self.DECKIMG}/frame/{position}{add}.png"
+        def frame(self, position: str, locale: Literal["ja", "zh-TW"] = "ja") -> str:
+            add = ".tw" if locale == "zh-TW" else ""
+            return f"{_DECK_IMG}/frame/{position}{add}.png"
 
         def level(self, number: str | int) -> str:
-            return f"{self.DECKIMG}/level/{number}.png"
+            return f"{_DECK_IMG}/level/{number}.png"
 
         def status(self, number: str | int) -> str:
-            return f"{self.DECKIMG}/status/{number}.png"
+            return f"{_DECK_IMG}/status/{number}.png"
 
         def blank(self) -> str:
-            return f"{self.DECKIMG}/blank.jpg"
+            return f"{_DECK_IMG}/blank.jpg"
 
-    DECK = _Deck(_IMGS)
+    deck = Deck()
+    del Deck
 
-    class _Detail(object):
+
+    class Detail(object):
         """Path of images for generating detail image."""
 
-        def __init__(self, _IMGS: str) -> None:
-            self.DETAILIMG = f"{_IMGS}/detail"
-
-        def activation(self, act: str | Activation) -> str:
-            return f"{self.DETAILIMG}/activation/{Activation(act).name.lower()}.png"
+        def activation(self, act: Literal["long", "none", "short"]) -> str:
+            return f"{_DETAIL_IMG}/activation/{act}.png"
 
         def cool_time(self, number: str | int) -> str:
-            return f"{self.DETAILIMG}/cool_time/{number}.png"
+            return f"{_DETAIL_IMG}/cool_time/{number}.png"
 
-        def frame(self, place: str, locale: Locale = Locale.japanese) -> str:
-            locale = Locale(locale)
-            add = ".tw" if locale == Locale.taiwan_chinese else ""
-            return f"{self.DETAILIMG}/frame/{place}{add}.png"
+        def frame(self, place: str, locale: Literal["ja", "zh-TW"] = "ja") -> str:
+            add = ".tw" if locale == "zh-TW" else ""
+            return f"{_DETAIL_IMG}/frame/{place}{add}.png"
 
         def level(self, number: str | int) -> str:
-            return f"{self.DETAILIMG}/level/{number}.png"
+            return f"{_DETAIL_IMG}/level/{number}.png"
 
-        def rarity(self, rarity_: str | Rarity) -> str:
-            rarity_ = Rarity(rarity_)
-            return f"{self.DETAILIMG}/rarity/{rarity_.name}.png"
+        def rarity(self, rarity_: Literal["N", "R", "SR", "UR"]) -> str:
+            return f"{_DETAIL_IMG}/rarity/{rarity_}.png"
 
         def status(self, number: str | int) -> str:
-            return f"{self.DETAILIMG}/status/{number}.png"
+            return f"{_DETAIL_IMG}/status/{number}.png"
 
-    DETAIL = _Detail(_IMGS)
+    detail = Detail()
+    del Detail
 
-PATH = _Path()
+    @property
+    def stage_blank(self) -> str:
+        """Path to a blank stage to generate embedded stage image."""
+        return f"{_IMG}/stage.png"
+
+    @property
+    def localedir(self) -> str:
+        """Path to locale directory."""
+        return f"{_ROOTPATH}/locale"
+
+
+path = Path()
+
+del Path

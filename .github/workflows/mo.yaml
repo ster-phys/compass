@@ -1,0 +1,32 @@
+name: Generate .mo files
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "compass/locale/*/LC_MESSAGES/*.po"
+
+jobs:
+  generate_mo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Run generating .mo scripts
+        run: |
+          ./mo.bash
+
+      - name: Create Pull Requests
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "[actions] Update .mo files"
+          branch: "actions/patch-mo"
+          title: "[actions] Update .mo files"

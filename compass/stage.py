@@ -25,114 +25,159 @@ __all__ = (
 )
 
 
+import json
 from dataclasses import dataclass
-from typing import Any
+from typing import Literal, TypeVar
 
-from PIL import Image
-from typing_extensions import Self
+from PIL import Image, ImageDraw, ImageFont
+from PIL.PngImagePlugin import PngImageFile
 
-from .path import PATH
-from .utils import ImageType, Locale, Tstr
+from .path import path
+from .utils import get_translator
+
+
+Self = TypeVar("Self", bound="Stage")
 
 
 @dataclass
 class Stage(object):
-    """Stage of Compass."""
-    __name: Tstr
-    __number: int
-    __portal: int
-    __filename: Tstr
-    __is_official: bool
+    """Class of a stage data."""
 
-    __path: Tstr = Tstr("")
+    _id: int
+    _name: str
+    _description: str
+    _number: int
+    _portal: int
+    _official: bool
+    _now: bool
+
+    _img_path: str = ""
 
     def __post_init__(self) -> None:
-        d = {}
-        for locale in Locale:
-            d[locale.value] = f"{PATH.STAGEIMG}/{self.__filename(locale)}.png"
-        self.__path = Tstr(**d)
+        self._img_path = path.stage_img(self.id)
 
     def __str__(self) -> str:
         return f"【{self.number}on{self.number}】{self.name}"
 
-    def image(self, locale: Locale = Locale.japanese) -> ImageType:
-        """Gets ``PIL`` image.
-
-        Parameters
-        ----------
-        locale: :class:`Locale`
-            If a locale-supported image is available, it is returned.
-
-        Returns
-        -------
-        :class:`ImageType`
-            ``PIL`` image of the stage.
-
-        """
-        return Image.open(self.path(locale))
+    @property
+    def id(self) -> int:
+        """ID of this card."""
+        return self._id
 
     @property
-    def name(self) -> Tstr:
-        """Name of the stage."""
-        return self.__name
+    def name(self) -> str:
+        """Name of this stage."""
+        return self._name
+
+    @property
+    def description(self) -> str:
+        """Description of this stage."""
+        return self._description
 
     @property
     def number(self) -> int:
-        """Number of people per team on the stage."""
-        return self.__number
+        """Number of people per team on this stage."""
+        return self._number
 
     @property
     def portal(self) -> int:
-        """Number of portals on the stage."""
-        return self.__portal
-
-    @property
-    def path(self) -> Tstr:
-        """Path of the image file."""
-        return self.__path
+        """Number of portals on this stage."""
+        return self._portal
 
     @property
     def is_official(self) -> bool:
         """Whether the stage is official or not."""
-        return self.__is_official
+        return self._official
+
+    @property
+    def now_available(self) -> bool:
+        """Whether the stage is available for regular matches."""
+        return self._now
+
+    @property
+    def img_path(self) -> str:
+        """Path to this stage's image."""
+        return self._img_path
+
+    @property
+    def image(self) -> PngImageFile:
+        """Obtains this stage's image as :class:`PIL.PngImagePlugin.PngImageFile`."""
+        return Image.open(self.img_path).convert("RGBA")
 
     @classmethod
-    def read_json(cls, json: dict[str, Any], **kwargs: str) -> Self:
-        """Class method to construct :class:`Stage` from :class:`dict`.
+    def from_id(cls, id: int) -> Self:
+        """Class method to construct :class:`compass.Stage` from stage id.
 
         Parameters
         ----------
-        json: Dict[:class:`str`, :class:`Any`]
-            Element of :file:`compass/data/stage.json.fernet`, that has
-            the following five keys;
-                name, filename: :class:`str`
-                number, portal: :class:`int`
-                is_official: :class:`bool`.
-        **kwargs: Dict[:class:`str`, :class:`str`]
-            Optional keyword arguments, that is used to supply multiple languages.
-            This parameter may have the following four keys;
-                en_name, en_filename, tw_name, tw_filename: :class:`str`.
+        id: :class:`int`
+            The ID of this stage.
+
+        Returns
+        -------
+        :class:`compass.Stage`
+            :class:`compass.Stage` object of this ID.
 
         """
-        en_name = kwargs.get("en_name", json["name"])
-        en_filename = kwargs.get("en_filename", json["filename"])
-        tw_name = kwargs.get("tw_name", json["name"])
-        tw_filename = kwargs.get("tw_filename", json["filename"])
 
-        d = {}
-        d["_Stage__name"] = Tstr(**{
-            Locale.japanese.value: json["name"],
-            Locale.taiwan_chinese.value: tw_name,
-            Locale.american_english.value: en_name,
-            Locale.british_english.value: en_name,
-        })
-        d["_Stage__number"] = json["number"]
-        d["_Stage__portal"] = json["portal"]
-        d["_Stage__filename"] = Tstr(**{
-            Locale.japanese.value: json["filename"],
-            Locale.taiwan_chinese.value: tw_filename,
-            Locale.american_english.value: en_filename,
-            Locale.british_english.value: en_filename,
-        })
-        d["_Stage__is_official"] = json["is_official"]
-        return cls(**d)
+        filepath = path.stage_data(id)
+        with open(filepath, "r") as f:
+            data = json.load(f)
+
+        kwargs = {}
+        kwargs["_id"] = data["id"]
+        kwargs["_name"] = data["name"]
+        kwargs["_description"] = data["description"]
+        kwargs["_number"] = data["number"]
+        kwargs["_portal"] = data["portal"]
+        kwargs["_official"] = data["official"]
+        kwargs["_now"] = data["now"]
+
+        return cls(**kwargs)
+
+    def generate_image(self,
+                       locale: Literal["ja", "zh-TW", "en"] = "ja") -> PngImageFile:
+        """Generates an image with processing applied.
+
+        Generates an image with embedded details such as stage name
+        and description.
+
+        Parameters
+        ----------
+        locale: Literal["ja", "zh-TW", "en"]
+            If a corresponding image is available, it is used.
+
+        Returns
+        -------
+        :class:`PngImageFile`
+            Generated image object.
+
+        """
+
+        base = Image.open(path.stage_blank).convert("RGBA")
+
+        img = Image.new("RGBA", base.size, color=(0xFF, 0xFF, 0xFF, 0x00))
+        img.paste(self.image, (46, 23))
+
+        base = Image.alpha_composite(base, img)
+
+        font = ImageFont.truetype(path.font(locale))
+
+        draw = ImageDraw.Draw(base)
+
+        _ = get_translator(locale)
+        name = _(self.name)
+        font = ImageFont.truetype(path.font(locale), size=31)
+        draw.text((47, 165), name, (0x00, 0x00, 0x00), font=font)
+
+        _ = get_translator(locale)
+        description = _(self.description)
+        font = ImageFont.truetype(path.font(locale), size=25)
+        draw.text((47, 210), description, (0x64, 0x64, 0x64), font=font)
+
+        _ = get_translator(locale)
+        select = _("選択")
+        font = ImageFont.truetype(path.font(locale), size=28)
+        draw.text((614, 205), select, (0xFF, 0xFF, 0xFF), font=font, anchor="mm", align="center")
+
+        return base.convert("RGBA")

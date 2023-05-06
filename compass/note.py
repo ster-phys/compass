@@ -20,30 +20,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 """
 
-__title__ = "compass"
-__author__ = "ster"
-__license__ = "GPL-3.0"
-__copyright__ = "Copyright 2021-present ster"
-__version__ = "1.2.0a"
+__all__ = (
+    "Note",
+)
 
 
-from .utils import _install_default_translator
-
-_install_default_translator()
+from enum import Enum
 
 
-from .activation import Activation
-from .attribute import Attribute
-from .card import Card
-from .data import CardData, HeroData, StageData
-from .hero import Hero
-from .note import Note
-from .rank import Rank
-from .rarity import Rarity
-from .role import Role
-from .stage import Stage
-from .status import Parameter, Status
-from .utils import get_translator
+class Note(str, Enum):
+    """Note for the card."""
 
+    NONE = ""
+    SEASON = _("シーズン報酬") # type: ignore
+    EVENT = _("イベント") # type: ignore
+    NORMAL = _("通常") # type: ignore
+    COLLABO = _("コラボ") # type: ignore
 
-del _install_default_translator
+    def __str__(self) -> str:
+        return self.value
