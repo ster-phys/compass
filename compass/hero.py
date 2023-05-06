@@ -25,190 +25,190 @@ __all__ = (
 )
 
 
+import json
 from dataclasses import dataclass
-from typing import Any
+from random import choice
+from typing import TypeVar
 
 from PIL import Image
-from typing_extensions import Self
+from PIL.PngImagePlugin import PngImageFile
 
-from .path import PATH
+from .path import path
 from .role import Role
 from .status import Parameter
-from .utils import ImageType, Locale, Tstr
+
+
+Self = TypeVar("Self", bound="Hero")
 
 
 @dataclass
 class Hero(object):
-    """Hero of Compass."""
-    __num: int
-    __name: Tstr
-    __setname: str
-    __parameter: Parameter
-    __speed: float
-    __role: Role
-    __ultname: Tstr
-    __ultinvincible: str
-    __haname: Tstr
-    __is_collabo: bool
-    __icon_name: str
-    __icon_color: int
-    __image_name: str
-    __image_color: int
+    """Class of a hero data."""
 
-    __icon_path: str = ""
-    __image_path: str = ""
+    _num: int
+    _id: int
+    _name: str
+    _role: Role
+    _parameter: Parameter
+    _setname: str
+    _speed: float
+    _ultname: str
+    _ultinvincible: str
+    _ult: str
+    _haname: str
+    _ha: str
+    _abilityname: str
+    _ability: str
+    _collabo: bool
+
+    _img_path: str = ""
+    _iconpath: str = ""
 
     def __post_init__(self) -> None:
-        self.__icon_path = f"{PATH.ICONIMG}/{self.__icon_name}.jpg"
-        self.__image_path = f"{PATH.HEROIMG}/{self.__image_name}.jpg"
+        self._img_path = path.hero_img(self.num)
+        self._iconpath = path.icon_img(self.num)
 
     def __str__(self) -> str:
-        return f"{self.num:03}_{self.__setname}"
+        return f"{self.id:03}_{self.setname}"
 
     @property
     def num(self) -> int:
-        """Number of the hero."""
-        return self.__num
+        """Number of this hero."""
+        return self._num
 
     @property
-    def name(self) -> Tstr:
-        """Name of the hero."""
-        return self.__name
-
-    @name.setter
-    def name(self, value: Tstr) -> None:
-        """Setter of the hero name."""
-        if type(value) is not Tstr:
-            raise ValueError("Value mast be Tstr.")
-        self.__name = value
-        return
+    def id(self) -> int:
+        """ID of this hero."""
+        return self._id
 
     @property
-    def parameter(self) -> Parameter:
-        """Parameter of the hero."""
-        return self.__parameter
-
-    @property
-    def speed(self) -> float:
-        """Speed of the hero."""
-        return self.__speed
+    def name(self) -> str:
+        """Name of this hero."""
+        return self._name
 
     @property
     def role(self) -> Role:
-        """Role of the hero."""
-        return self.__role
+        """Role of this hero."""
+        return self._role
 
     @property
-    def ultname(self) -> Tstr:
-        """Hero skill name of the hero."""
-        return self.__ultname
+    def parameter(self) -> Parameter:
+        """Parameter of this hero."""
+        return self._parameter
+
+    @property
+    def setname(self) -> str:
+        """The shortened name of this hero."""
+        return self._setname
+
+    @property
+    def speed(self) -> float:
+        """Movement speed of this hero."""
+        return self._speed
+
+    @property
+    def ultname(self) -> str:
+        """Name of this hero's ultimate skill."""
+        return self._ultname
 
     @property
     def ultinvincible(self) -> str:
-        """Iinvincibility time of the hero skill."""
-        return self.__ultinvincible
+        """Invincibility time of this hero's ultimate skill."""
+        return self._ultinvincible
 
     @property
-    def haname(self) -> Tstr:
-        """Ability name of the hero."""
-        return self.__haname
+    def ult(self) -> str:
+        """Ultimate skill of this hero."""
+        return self._ult
+
+    @property
+    def haname(self) -> str:
+        """Name of this hero's hero action."""
+        return self._haname
+
+    @property
+    def ha(self) -> str:
+        """Hero action of this hero."""
+        return self._ha
+
+    @property
+    def abilityname(self) -> str:
+        """Name of this hero's hero ability."""
+        return self._abilityname
+
+    @property
+    def ability(self) -> str:
+        """Hero ability of this hero."""
+        return self._ability
 
     @property
     def is_collabo(self) -> bool:
-        """wWhether or not the collaboration hero."""
-        return self.__is_collabo
+        """Whether this hero is a collaborative hero or not."""
+        return self._collabo
 
     @property
-    def icon_path(self) -> str:
-        """Path of the hero's icon."""
-        return self.__icon_path
+    def img_path(self) -> str:
+        """Path to this hero image."""
+        return self._img_path
 
     @property
-    def icon_color(self) -> int:
-        """Icon color of the hero."""
-        return self.__icon_color
+    def iconpath(self) -> str:
+        """Path to this hero's icon."""
+        return self._iconpath
 
     @property
-    def image_path(self) -> str:
-        """Path of the hero's image."""
-        return self.__image_path
+    def image(self) -> PngImageFile:
+        """Obtains this hero's image as :class:`PIL.PngImagePlugin.PngImageFile`."""
+        return Image.open(self.img_path).convert("RGBA")
 
     @property
-    def image_color(self) -> int:
-        """Image color of the hero."""
-        return self.__image_color
+    def icon(self) -> PngImageFile:
+        """Obtains this hero's icon as :class:`PIL.PngImagePlugin.PngImageFile`."""
+        return Image.open(self.iconpath).convert("RGBA")
 
     @property
-    def icon(self) -> ImageType:
-        """Gets icon as ``PIL`` image."""
-        return Image.open(self.icon_path)
-
-    @property
-    def image(self) -> ImageType:
-        """Gets hero as ``PIL`` image."""
-        return Image.open(self.image_path)
+    def color(self) -> int:
+        """Obtains main color of this hero."""
+        img = self.icon
+        x, y = choice(range(img.size[0])), choice(range(img.size[1]))
+        r, g, b, a = img.getpixel((x, y))
+        return ((r << 8) + g) << 8 + b
 
     @classmethod
-    def read_json(cls, json: dict[str, Any], **kwargs: str) -> Self:
-        """Class method to construct :class:`Hero` from :class:`dict`.
+    def from_num(cls, num: int) -> Self:
+        """Class method to construct :class:`compass.Hero` from hero number.
 
         Parameters
         ----------
-        json: Dict[:class:`str`, :class:`Any`]
-            Element of :file:`compass/data/hero.json.fernet`, that has the following
-            sixteen keys;
-                num, icon_color, image_color: :class:`int`
-                name, setname, role, ultname, ultinvincible, haname, icon_name, image_name: :class:`str`
-                attack, defense, physical, speed: :class:`float`
-                is_collabo: :class:`bool`.
-        **kwargs: :class:`str`
-            Optional keyword arguments, that is used to supply multiple languages.
-            This parameter may have the following six keys;
-                en_name, en_ultname, en_haname, tw_name, tw_ultname, tw_haname: :class:`str`.
+        num: :class:`int`
+            The number of this hero.
+
+        Returns
+        -------
+        :class:`compass.Hero`
+            :class:`compass.Hero` object of this number.
 
         """
-        en_name = kwargs.get("en_name", json["name"])
-        en_ultname = kwargs.get("en_ultname", json["ultname"])
-        en_haname = kwargs.get("en_haname", json["haname"])
-        tw_name = kwargs.get("tw_name", json["ultname"])
-        tw_ultname = kwargs.get("tw_ultname", json["name"])
-        tw_haname = kwargs.get("tw_haname", json["haname"])
 
-        en_name = en_name if en_name else json["name"]
-        en_ultname = en_ultname if en_ultname else json["ultname"]
-        en_haname = en_haname if en_haname else json["haname"]
-        tw_name = tw_name if tw_name else json["name"]
-        tw_ultname = tw_ultname if tw_ultname else json["ultname"]
-        tw_haname = tw_haname if tw_haname else json["haname"]
+        filepath = path.hero_data(num)
+        with open(filepath, "r") as f:
+            data = json.load(f)
 
-        d = {}
-        d["_Hero__num"] = json["num"]
-        d["_Hero__name"] = Tstr(**{
-            Locale.japanese.value: json["name"],
-            Locale.taiwan_chinese.value: tw_name,
-            Locale.american_english.value: en_name,
-            Locale.british_english.value: en_name,
-        })
-        d["_Hero__setname"] = json["setname"]
-        d["_Hero__parameter"] = Parameter(json["attack"], json["defense"], json["physical"])
-        d["_Hero__speed"] = json["speed"]
-        d["_Hero__role"] = Role(json["role"])
-        d["_Hero__ultname"] = Tstr(**{
-            Locale.japanese.value: json["ultname"],
-            Locale.taiwan_chinese.value: tw_ultname,
-            Locale.american_english.value: en_ultname,
-            Locale.british_english.value: en_ultname,
-        })
-        d["_Hero__ultinvincible"] = json["ultinvincible"]
-        d["_Hero__haname"] = Tstr(**{
-            Locale.japanese.value: json["name"],
-            Locale.taiwan_chinese.value: tw_haname,
-            Locale.american_english.value: en_haname,
-            Locale.british_english.value: en_haname,
-        })
-        d["_Hero__is_collabo"] = json["is_collabo"]
-        d["_Hero__icon_name"] = json["icon_name"]
-        d["_Hero__icon_color"] = json["icon_color"]
-        d["_Hero__image_name"] = json["image_name"]
-        d["_Hero__image_color"] = json["image_color"]
-        return cls(**d)
+        kwargs = {}
+        kwargs["_num"] = data["num"]
+        kwargs["_id"] = data["id"]
+        kwargs["_name"] = data["name"]
+        kwargs["_role"] = Role(data["role"])
+        kwargs["_parameter"] = Parameter(data["atk"], data["def"], data["phs"])
+        kwargs["_setname"] = data["setname"]
+        kwargs["_speed"] = data["speed"]
+        kwargs["_ultname"] = data["ultname"]
+        kwargs["_ultinvincible"] = data["ultinvincible"]
+        kwargs["_ult"] = data["ult"]
+        kwargs["_haname"] = data["haname"]
+        kwargs["_ha"] = data["ha"]
+        kwargs["_abilityname"] = data["abilityname"]
+        kwargs["_ability"] = data["ability"]
+        kwargs["_collabo"] = data["collabo"]
+
+        return cls(**kwargs)

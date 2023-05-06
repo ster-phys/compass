@@ -26,74 +26,89 @@ __all__ = (
 )
 
 
+from collections import UserDict
 from copy import copy
 from dataclasses import dataclass
+from typing import TypeVar
 
-from typing_extensions import Self
+
+Self = TypeVar("Self", bound="Parameter")
 
 
 @dataclass
 class Parameter(object):
-    """Parameters of the compass data."""
+    """Parameter of the compass data."""
+
     attack: float
     defense: float
     physical: float
 
-    def __iadd__(self, __x: Self) -> Self:
-        self.attack += __x.attack
-        self.defense += __x.defense
-        self.physical += __x.physical
+    def __iadd__(self, obj: Self) -> Self:
+        self.attack += obj.attack
+        self.defense += obj.defense
+        self.physical += obj.physical
         return self
 
-    def __add__(self, __x: Self) -> Self:
+    def __add__(self, obj: Self) -> Self:
         tmp = copy(self)
-        tmp.__iadd__(__x)
+        tmp.__iadd__(obj)
         return tmp
 
-    def __isub__(self, __x: Self) -> Self:
-        self.attack -= __x.attack
-        self.defense -= __x.defense
-        self.physical -= __x.physical
+    def __isub__(self, obj: Self) -> Self:
+        self.attack -= obj.attack
+        self.defense -= obj.defense
+        self.physical -= obj.physical
         return self
 
-    def __sub__(self, __x: Self) -> Self:
+    def __sub__(self, obj: Self) -> Self:
         tmp = copy(self)
-        tmp.__isub__(__x)
+        tmp.__isub__(obj)
         return tmp
 
-    def __imul__(self, __x: Self) -> Self:
-        self.attack *= __x.attack
-        self.defense *= __x.defense
-        self.physical *= __x.physical
+    def __imul__(self, obj: Self) -> Self:
+        self.attack *= obj.attack
+        self.defense *= obj.defense
+        self.physical *= obj.physical
         return self
 
-    def __mul__(self, __x: Self) -> Self:
+    def __mul__(self, obj: Self) -> Self:
         tmp = copy(self)
-        tmp.__imul__(__x)
+        tmp.__imul__(obj)
         return tmp
 
-    def __itruediv__(self, __x: Self) -> Self:
-        self.attack /= __x.attack
-        self.defense /= __x.defense
-        self.physical /= __x.physical
+    def __itruediv__(self, obj: Self) -> Self:
+        self.attack /= obj.attack
+        self.defense /= obj.defense
+        self.physical /= obj.physical
         return self
 
-    def __truediv__(self, __x: Self) -> Self:
+    def __truediv__(self, obj: Self) -> Self:
         tmp = copy(self)
-        tmp.__itruediv__(__x)
+        tmp.__itruediv__(obj)
         return tmp
 
-_level_list = [1, 20, 30, 40, 50, 60]
 
-class Status(dict):
+class Status(UserDict):
     """Status of the card."""
-    def __init__(self, **data: dict[str, float]) -> None:
-        super().__init__()
-        atks, defs, phss = data["atk"], data["def"], data["phs"]
-        for v in _level_list:
-            param = Parameter(atks[str(v)], defs[str(v)], phss[str(v)])
-            self.update({str(v): param})
 
-    def __getitem__(self, __key):
-        __key = str(__key) if type(__key) is int else __key
-        return super().__getitem__(__key)
+    def __init__(self,
+                 atk: dict[str, int | float],
+                 def_: dict[str, int | float],
+                 phs: dict[str, int | float]) -> None:
+        """Status of the card.
+
+        Parameters
+        ----------
+        atk: Dict[:class:`str`, :class:`int` | :class:`float`]
+            Card attack parameter.
+        def_: Dict[:class:`str`, :class:`int` | :class:`float`]
+            Card defense parameter.
+        phs: Dict[:class:`str`, :class:`int` | :class:`float`]
+            Card physical parameter.
+
+        """
+
+        super().__init__()
+        for lv in [1, 20, 30, 40, 50, 60]:
+            param = Parameter(atk[f"lv{lv:02d}"], def_[f"lv{lv:02d}"], phs[f"lv{lv:02d}"])
+            self.update({f"lv{lv:02d}": param})
