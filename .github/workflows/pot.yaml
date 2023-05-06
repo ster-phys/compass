@@ -1,0 +1,32 @@
+name: Generate .pot files
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "compass/*.py"
+
+jobs:
+  generate_pot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Run generating .pot scripts
+        run: |
+          ./pot.bash
+
+      - name: Create Pull Requests
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "[actions] Update .pot files"
+          branch: "actions/patch-pot"
+          title: "[actions] Update .pot files"
