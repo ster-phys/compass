@@ -35,8 +35,9 @@ jobs:
         working-directory: .wiki
         if: steps.staging.outputs.NUM_OF_STAGED > 0
         run: |
-          git config user.email "ster-phys@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .
           git commit -m "[actions] Update wiki entry"
           git push
 

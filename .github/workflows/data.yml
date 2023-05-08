@@ -31,8 +31,8 @@ jobs:
           git add compass/compass-data/*
           if ! git diff --exit-code --quiet
           then
-            git config user.name github-actions
-            git config user.email github-actions@github.com
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
             git add compass/compass-data/*
             git commit -m "[actions] Update compass data"
             git push
