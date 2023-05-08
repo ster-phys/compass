@@ -1,0 +1,45 @@
+name: Publish GitHub Wiki
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - "compass/compass-data/data/card/**"
+
+jobs:
+  publish_wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/checkout@v3
+        with:
+          repository: "${{ github.repository }}.wiki"
+          path: .wiki
+
+      - name: Generate wiki pages
+        run: |
+          ./wiki.bash
+
+      - name: Stage and count changes
+        working-directory: .wiki
+        id: staging
+        run: |
+          git add .
+          echo "NUM_OF_STAGED=$(git diff --staged --name-only | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Commit wiki pages
+        working-directory: .wiki
+        if: steps.staging.outputs.NUM_OF_STAGED > 0
+        run: |
+          git config user.email "ster-phys@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -m "[actions] Update wiki entry"
+          git push
+
+      - name: Remove unneeded files
+        run: |
+          rm -rf .wiki
