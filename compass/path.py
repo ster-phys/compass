@@ -91,7 +91,7 @@ class Path(object):
     @property
     def abbs_data(self) -> str:
         """Path to the file where the abbreviation is stored."""
-        return f"{_DATA}/abbreviations.json"
+        return f"{_DATA}/abbs.json"
 
 
     def font(self, locale: Literal["ja", "zh-TW"] = "ja") -> str:

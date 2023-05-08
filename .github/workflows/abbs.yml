@@ -1,0 +1,37 @@
+name: Get card abbreviations
+
+on:
+  workflow_dispatch:
+  gollum:
+
+jobs:
+  get_abbreviations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/checkout@v3
+        with:
+          repository: "${{ github.repository }}.wiki"
+          path: .wiki
+
+      - name: Generate abbs json
+        run: |
+          ./abbs.bash
+
+      - name: Remove unneeded files
+        run: |
+          rm -rf .wiki
+
+      - name: Push to master
+        run: |
+          git add compass/data/abbs.json
+          if ! git diff --exit-code --quiet
+          then
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add compass/data/abbs.json
+            git commit -m "[actions] Update abbreviations json"
+            git push
+          fi

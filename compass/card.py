@@ -186,7 +186,10 @@ class Card(object):
         kwargs["_note"] = Note(data["note"])
         kwargs["_theme"] = data["theme"]
 
-        kwargs["_abbreviations"] = []
+        with open(path.abbs_data, "r") as f:
+            abbs = json.load(f)
+
+        kwargs["_abbreviations"] = abbs.get(str(data["num"]), [])
 
         return cls(**kwargs)
 
