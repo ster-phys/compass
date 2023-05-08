@@ -1,5 +1,6 @@
 include LICENSE
 recursive-include compass/compass-data *
+recursive-include compass/data *
 recursive-include compass/font *
 recursive-include compass/img *
 recursive-include compass/locale *
