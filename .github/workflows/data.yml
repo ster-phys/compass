@@ -1,0 +1,35 @@
+name: Update compass data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update_compass_data:
+    runs-on: ubuntu-latest
+
+    env:
+      OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN_TO_COMPASS_DATA }}
+      OWNER: ${{ secrets.DATA_REPOSITORY_OWNER }}
+      REPO: ${{ secrets.DATA_REPOSITORY_NAME }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get release from REPO
+        run: |
+          API_URL=https://$OAUTH_TOKEN:@api.github.com/repos/$OWNER/$REPO
+          ASSET_ID=$(curl $API_URL/releases/latest | jq -r ".assets[1].id")
+          FILE_NAME=data.zip
+          curl -J -L -H "Accept: application/octet-stream" "$API_URL/releases/assets/$ASSET_ID" -o $FILE_NAME
+          unzip -o $FILE_NAME -d compass/compass-data
+          rm $FILE_NAME
+
+      - name: Push to master
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add compass/compass-data/*
+          git commit -m "[actions] Update compass data"
+          git push
