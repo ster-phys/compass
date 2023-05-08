@@ -1,4 +1,4 @@
-name: Generate .pot files
+name: Generate pot files
 
 on:
   workflow_dispatch:
@@ -24,9 +24,14 @@ jobs:
         run: |
           ./pot.bash
 
-      - name: Create Pull Requests
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: "[actions] Update .pot files"
-          branch: "actions/patch-pot"
-          title: "[actions] Update .pot files"
+      - name: Push to master
+        run: |
+          git add compass/locale/*.pot
+          if ! git diff --exit-code --quiet
+          then
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add compass/locale/*.pot
+            git commit -m "[actions] Update pot files"
+            git push
+          fi
