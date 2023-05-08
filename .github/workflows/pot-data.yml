@@ -18,9 +18,9 @@ jobs:
 
       - name: Generate pot files
         run: |
-          CARD_POT=compass/locale/#card.pot
-          HERO_POT=compass/locale/#hero.pot
-          STAGE_POT=compass/locale/#stage.pot
+          CARD_POT=compass/locale/card.pot
+          HERO_POT=compass/locale/hero.pot
+          STAGE_POT=compass/locale/stage.pot
           POT_HEADER="# SOME DESCRIPTIVE TITLE.
           # Copyright (C) YEAR ORGANIZATION
           # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
