@@ -22,11 +22,7 @@ jobs:
 
       - name: Run generating .pot scripts
         run: |
-          for file in ./compass/*.py; do
-              basename=${file##*/}
-              domain=${basename%.*}
-              python i18n/pygettext.py -d $domain -p compass/locale $file
-          done
+          python i18n/pygettext.py -d compass -p compass/locale $(ls -d compass/*.py)
 
       - name: Push to master
         run: |
