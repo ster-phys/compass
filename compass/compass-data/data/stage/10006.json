@@ -1,0 +1,9 @@
+{
+    "id": 10006,
+    "name": "光と闇のライブステージ",
+    "description": "専用の楽曲が流れるライブステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}

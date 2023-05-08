@@ -1,0 +1,9 @@
+{
+    "id": 10001,
+    "name": "でらクランクストリート",
+    "description": "大きなS字クランクのステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}

@@ -1,0 +1,9 @@
+{
+    "id": 10018,
+    "name": "2on2 でらクランク",
+    "description": "2on2用の狭いステージ",
+    "number": 2,
+    "portal": 3,
+    "official": true,
+    "now": false
+}

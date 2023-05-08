@@ -1,0 +1,9 @@
+{
+    "id": 10003,
+    "name": "東西たかさん広場",
+    "description": "ルートが無い平面的なステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}

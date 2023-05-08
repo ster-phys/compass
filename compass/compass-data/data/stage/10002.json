@@ -1,0 +1,9 @@
+{
+    "id": 10002,
+    "name": "けっこいスターパーク",
+    "description": "段差で入り組んだステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}
