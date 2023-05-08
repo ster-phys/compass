@@ -1,0 +1,9 @@
+{
+    "id": 10019,
+    "name": "2on2 グレートウォール",
+    "description": "2on2用の狭いステージ",
+    "number": 2,
+    "portal": 3,
+    "official": true,
+    "now": false
+}

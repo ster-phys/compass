@@ -1,0 +1,9 @@
+{
+    "id": 10004,
+    "name": "グレートウォール",
+    "description": "壁っぽいステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}

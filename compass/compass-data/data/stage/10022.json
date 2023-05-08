@@ -1,0 +1,9 @@
+{
+    "id": 10022,
+    "name": "グレートホール",
+    "description": "穴があったら入りたいステージ",
+    "number": 3,
+    "portal": 5,
+    "official": true,
+    "now": true
+}
