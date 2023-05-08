@@ -22,7 +22,7 @@ jobs:
 
       - name: Run generating .mo scripts
         run: |
-          ./mo.bash
+          python i18n/msgfmt.py compass/locale/*/LC_MESSAGES/*.po
 
       - name: Push to master
         run: |
