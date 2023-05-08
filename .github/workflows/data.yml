@@ -28,7 +28,7 @@ jobs:
 
       - name: Push to master
         run: |
-          git add compass/compass-data/*
+          git add -N compass/compass-data/*
           if ! git diff --exit-code --quiet
           then
             git config user.name github-actions[bot]
