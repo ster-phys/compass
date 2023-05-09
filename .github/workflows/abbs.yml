@@ -2,7 +2,9 @@ name: Get card abbreviations
 
 on:
   workflow_dispatch:
-  gollum:
+  schedule:
+    - cron: "0 0 * * *"
+
 
 jobs:
   get_abbreviations:
