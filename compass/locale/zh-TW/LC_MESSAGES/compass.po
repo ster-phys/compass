@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2023-05-10 06:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: compass/activation.py:34
+msgid "長"
+msgstr "長"
+
+#: compass/activation.py:35
+msgid "短"
+msgstr "短"
+
+#: compass/activation.py:36
+msgid "無"
+msgstr "無"
+
+#: compass/attribute.py:38
+msgid "水"
+msgstr "水"
+
+#: compass/attribute.py:39
+msgid "火"
+msgstr "火"
+
+#: compass/attribute.py:40
+msgid "木"
+msgstr "木"
+
+#: compass/note.py:35 compass/rank.py:51
+msgid "シーズン報酬"
+msgstr "賽季獎勵"
+
+#: compass/note.py:36 compass/rank.py:49
+msgid "イベント"
+msgstr "活動"
+
+#: compass/note.py:37
+msgid "通常"
+msgstr "一般"
+
+#: compass/note.py:38
+msgid "コラボ"
+msgstr "聯動"
+
+#: compass/rank.py:50
+msgid "コラボガチャ"
+msgstr "聯動轉蛋"
+
+#: compass/role.py:34
+msgid "アタッカー"
+msgstr "戰士"
+
+#: compass/role.py:35
+msgid "スプリンター"
+msgstr "快跑手"
+
+#: compass/role.py:36
+msgid "ガンナー"
+msgstr "狙擊手"
+
+#: compass/role.py:37
+msgid "タンク"
+msgstr "坦克"
+
+#: compass/stage.py:179
+msgid "選択"
+msgstr "選󠄁擇"
+
