@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2023-05-08 16:18+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pot-data.yml\n"
+
+
+#: 10001
+msgid "でらクランクストリート"
+msgstr "でらクランクストリート"
+
+msgid "大きなS字クランクのステージ"
+msgstr "大きなS字クランクのステージ"
+
+#: 10002
+msgid "けっこいスターパーク"
+msgstr "けっこいスターパーク"
+
+msgid "段差で入り組んだステージ"
+msgstr "段差で入り組んだステージ"
+
+#: 10003
+msgid "東西たかさん広場"
+msgstr "東西たかさん広場"
+
+msgid "ルートが無い平面的なステージ"
+msgstr "ルートが無い平面的なステージ"
+
+#: 10004
+msgid "グレートウォール"
+msgstr "グレートウォール"
+
+msgid "壁っぽいステージ"
+msgstr "壁っぽいステージ"
+
+#: 10005
+msgid "立体交差のある風景"
+msgstr "立体交差のある風景"
+
+msgid "森に囲まれた立体交差のあるステージ"
+msgstr "森に囲まれた立体交差のあるステージ"
+
+#: 10006
+msgid "光と闇のライブステージ"
+msgstr "光と闇のライブステージ"
+
+msgid "専用の楽曲が流れるライブステージ"
+msgstr "専用の楽曲が流れるライブステージ"
+
+#: 10007
+msgid "妖華帝都ケルパーズの散歩道"
+msgstr "妖華帝都ケルパーズの散歩道"
+
+msgid "夜桜が綺麗なステージ"
+msgstr "夜桜が綺麗なステージ"
+
+#: 10008
+msgid "ちゅら島リゾート"
+msgstr "ちゅら島リゾート"
+
+msgid "綺麗な海のリゾートステージ"
+msgstr "綺麗な海のリゾートステージ"
+
+#: 10009
+msgid "って～！つっぺる工事現場"
+msgstr "って～！つっぺる工事現場"
+
+msgid "落ちる床がある工事現場ステージ"
+msgstr "落ちる床がある工事現場ステージ"
+
+#: 10010
+msgid "太鼓で祭りだドーン！"
+msgstr "太鼓で祭りだドーン！"
+
+msgid "太鼓の達人とのコラボステージ"
+msgstr "太鼓の達人とのコラボステージ"
+
+#: 10011
+msgid "【ストレス区】急襲戦闘区域"
+msgstr "【ストレス区】急襲戦闘区域"
+
+msgid "進撃の巨人とのコラボステージ"
+msgstr "進撃の巨人とのコラボステージ"
+
+#: 10012
+msgid "おいでやす鳥居通り"
+msgstr "おいでやす鳥居通り"
+
+msgid "紅葉が綺麗なステージ"
+msgstr "紅葉が綺麗なステージ"
+
+#: 10013
+msgid "かけだせ！じっぱか城"
+msgstr "かけだせ！じっぱか城"
+
+msgid "ワープが出来るお城ステージ"
+msgstr "ワープが出来るお城ステージ"
+
+#: 10014
+msgid "どっひゃぁ～！なっから遺跡"
+msgstr "どっひゃぁ～！なっから遺跡"
+
+msgid "何かが眠っている遺跡ステージ"
+msgstr "何かが眠っている遺跡ステージ"
+
+#: 10015
+msgid "Castle of the Silver Feet"
+msgstr "Castle of the Silver Feet"
+
+msgid "GUILTY GEARとのコラボステージ"
+msgstr "GUILTY GEARとのコラボステージ"
+
+#: 10016
+msgid "マジきてる＃夜行犯罪特区"
+msgstr "マジきてる＃夜行犯罪特区"
+
+msgid "入り組んだ怪しいビル街ステージ"
+msgstr "入り組んだ怪しいビル街ステージ"
+
+#: 10017
+msgid "Hello :-) irregular World"
+msgstr "Hello :-) irregular World"
+
+msgid "用意した覚えがないステージ"
+msgstr "用意した覚えがないステージ"
+
+#: 10018
+msgid "2on2 でらクランク"
+msgstr "2on2 でらクランク"
+
+msgid "2on2用の狭いステージ"
+msgstr "2on2用の狭いステージ"
+
+#: 10019
+msgid "2on2 グレートウォール"
+msgstr "2on2 グレートウォール"
+
+msgid "2on2用の狭いステージ"
+msgstr ""
+
+#: 10020
+msgid "2on2 ちゅら島リゾート"
+msgstr "2on2 ちゅら島リゾート"
+
+msgid "2on2用の狭いステージ"
+msgstr ""
+
+#: 10021
+msgid "でらクラクラストリート"
+msgstr "でらクラクラストリート"
+
+msgid "クラクラクラクラクラクラステージ"
+msgstr "クラクラクラクラクラクラステージ"
+
+#: 10022
+msgid "グレートホール"
+msgstr "グレートホール"
+
+msgid "穴があったら入りたいステージ"
+msgstr "穴があったら入りたいステージ"
+
+#: 10023
+msgid "立体交差のない風景"
+msgstr "立体交差のない風景"
+
+msgid "立体交差なんて無かったステージ"
+msgstr "立体交差なんて無かったステージ"
+
