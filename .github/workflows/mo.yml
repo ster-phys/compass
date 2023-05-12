@@ -6,7 +6,7 @@ on:
     branches:
       - master
     paths:
-      - "compass/locale/*/LC_MESSAGES/*.po"
+      - "compass/locale/**.po"
 
 jobs:
   generate_mo:
