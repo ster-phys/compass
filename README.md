@@ -1,6 +1,6 @@
 # compass
 
-[![python3.10](https://img.shields.io/badge/python-3.10-3776AB.svg?logo=python)](https://docs.python.org/3.10/) [![LICENSE](https://img.shields.io/github/license/ster-phys/bot_cps)](./LICENSE) [![gitlocalized](https://gitlocalize.com/repo/8640/whole_project/badge.svg)](https://gitlocalize.com/repo/8640/whole_project?utm_source=badge) [![Discord](https://img.shields.io/discord/834671256367530014.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](http://discord.gg/Pmt5BetUqb) [![Twitter Follow](https://img.shields.io/twitter/follow/bot_cps?style=social)](https://twitter.com/bot_cps)
+[![python3.10](https://img.shields.io/badge/python-3.10-3776AB.svg?logo=python)](https://docs.python.org/3.10/) [![LICENSE](https://img.shields.io/github/license/ster-phys/bot_cps)](./LICENSE) [![gitlocalized](https://gitlocalize.com/repo/8640/whole_project/badge.svg)](https://gitlocalize.com/repo/8640) [![Discord](https://img.shields.io/discord/834671256367530014.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](http://discord.gg/Pmt5BetUqb) [![Twitter Follow](https://img.shields.io/twitter/follow/bot_cps?style=social)](https://twitter.com/bot_cps)
 
 A library for easy handling of #compass data.
 
