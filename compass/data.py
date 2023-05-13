@@ -694,13 +694,16 @@ class StageData(UserList[Stage]):
 
         return similar(key, self.data, lambda el: [el.name])
 
-    def get_stage(self, number: int = 3) -> Stage:
+    def get_stage(self, number: int = 3, only_available: bool = True) -> Stage:
         """Returns data for stage that satisfied the condition.
 
         Parameters
         ----------
         number: :class:`int`
             Number of people per team.
+        only_available: :class:`bool`
+            Whether or not to chooses only from stages currently available for
+            regular battles.
 
         Returns
         -------
@@ -708,16 +711,19 @@ class StageData(UserList[Stage]):
             Returns a stage that satisfies the condition at random.
 
         """
-        stages = self.get_stages(number)
+        stages = self.get_stages(number, only_available)
         return choice(stages)
 
-    def get_stages(self, number: int = 3) -> StageList:
+    def get_stages(self, number: int = 3, only_available: bool = True) -> StageList:
         """Returns data for stages that satisfied the condition.
 
         Parameters
         ----------
         number: :class:`int`
             Number of people per team.
+        only_available: :class:`bool`
+            Whether or not to chooses only from stages currently available for
+            regular battles.
 
         Returns
         -------
@@ -727,7 +733,7 @@ class StageData(UserList[Stage]):
         """
         retval = self.__class__([])
         for stage in self:
-            if stage.number == number and stage.now_available:
+            if stage.number == number and (stage.now_available or not only_available):
                 retval.append(stage)
 
         return retval
