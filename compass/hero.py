@@ -172,7 +172,7 @@ class Hero(object):
         img = self.icon
         x, y = choice(range(img.size[0])), choice(range(img.size[1]))
         r, g, b, a = img.getpixel((x, y))
-        return ((r << 8) + g) << 8 + b
+        return (((r << 8) + g) << 8) + b
 
     @classmethod
     def from_num(cls, num: int) -> Self:
