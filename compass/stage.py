@@ -27,7 +27,7 @@ __all__ = (
 
 import json
 from dataclasses import dataclass
-from typing import Literal, TypeVar
+from typing import TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from PIL.PngImagePlugin import PngImageFile
@@ -135,8 +135,7 @@ class Stage(object):
 
         return cls(**kwargs)
 
-    def generate_image(self,
-                       locale: Literal["ja", "zh-TW", "en"] = "ja") -> PngImageFile:
+    def generate_image(self, locale: str = "ja") -> PngImageFile:
         """Generates an image with processing applied.
 
         Generates an image with embedded details such as stage name
@@ -144,7 +143,7 @@ class Stage(object):
 
         Parameters
         ----------
-        locale: Literal["ja", "zh-TW", "en"]
+        locale: :class:`str`
             If a corresponding image is available, it is used.
 
         Returns

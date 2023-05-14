@@ -36,7 +36,7 @@ For translation, it is possible to do the following.
 >>> _ = get_translator("zh-TW")
 >>> print(_(Role.ATTACKER))
 戰士
->>> _ = get_translator("en")
+>>> _ = get_translator("en-US")
 >>> print(_(Role.ATTACKER))
 attacker
 ```

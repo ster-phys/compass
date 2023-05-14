@@ -27,7 +27,7 @@ __all__ = (
 
 import json
 from dataclasses import dataclass
-from typing import Literal, TypeVar
+from typing import TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from PIL.PngImagePlugin import PngImageFile
@@ -193,9 +193,7 @@ class Card(object):
 
         return cls(**kwargs)
 
-    def generate_image(self,
-                       level: int = 50,
-                       locale: Literal["ja", "zh-TW", "en"] = "ja") -> PngImageFile:
+    def generate_image(self, level: int = 50, locale: str = "ja") -> PngImageFile:
         """Generates an image with processing applied.
 
         Generates an image with embedded details such as card effects
@@ -205,7 +203,7 @@ class Card(object):
         ----------
         level: :class:`int`
             Level of the card to be displayed.
-        locale: Literal["ja", "zh-TW", "en"]
+        locale: :class:`str`
             If a corresponding image is available, it is used.
 
         Returns

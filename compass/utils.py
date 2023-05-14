@@ -35,21 +35,22 @@ __all__ = (
 import gettext
 from glob import glob
 from os.path import basename
-from typing import Any, Callable, Literal, NewType
+from typing import Any, Callable, NewType
 
 from PIL import Image
 from PIL.JpegImagePlugin import JpegImageFile
 from PIL.PngImagePlugin import PngImageFile
 from rapidfuzz.process import cdist
+
 from .path import path
 
 
-def get_translator(lang: Literal["ja", "zh-TW", "en"] = "ja") -> Callable[[str], str]:
+def get_translator(lang: str = "ja") -> Callable[[str], str]:
     """Defines ``_`` to translate.
 
     Parameters
     ----------
-    lang: Literal["ja", "zh-TW", "en"]
+    lang: :class:`str`
         Target languages for translation.
 
     Returns
@@ -66,9 +67,6 @@ def get_translator(lang: Literal["ja", "zh-TW", "en"] = "ja") -> Callable[[str],
     ```
 
     """
-
-    if lang not in ["ja", "zh-TW", "en"]:
-        lang = "ja"
 
     files = glob(path.localedir + "/*.pot")
     domains = list(map(lambda file: basename(file)[:-4], files))
@@ -96,11 +94,15 @@ def _install_default_translator() -> None:
     files = glob(path.localedir + "/*.pot")
     domains = list(map(lambda file: basename(file)[:-4], files))
 
+    files = glob(path.localedir + "/*/LC_MESSAGES")
+    langs = tuple(map(lambda file: file.replace(f"{path.localedir}/", "")\
+                                      .replace("/LC_MESSAGES", ""), files))
+
     fallbacks = [
         gettext.translation(
             domain=domain,
             localedir=path.localedir,
-            languages=("ja", "zh-TW", "en", ),
+            languages=langs,
             fallback=True,
         )
         for domain in domains

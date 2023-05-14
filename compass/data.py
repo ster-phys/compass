@@ -32,7 +32,7 @@ from glob import glob
 from math import ceil, sqrt
 from os.path import basename, splitext
 from random import choice
-from typing import Any, Literal, TypeVar, overload
+from typing import Any, TypeVar, overload
 
 from PIL import Image, ImageDraw
 from PIL.PngImagePlugin import PngImageFile
@@ -341,7 +341,7 @@ class CardData(UserList[Card]):
 
     def generate_image(self,
                        levels: list[int] | None = [50]*4,
-                       locale: Literal["ja", "zh-TW", "en"] = "ja") -> PngImageFile:
+                       locale: str = "ja") -> PngImageFile:
         """Generates an image with processing applied.
 
         The behaviour depends on the number of cards.
@@ -356,7 +356,7 @@ class CardData(UserList[Card]):
         ----------
         levels: Optional[List[int]]
             Cards' level.
-        locale: Literal["ja", "zh-TW", "en"]
+        locale: str
             If a corresponding image is available, it is used.
 
         Returns
@@ -382,16 +382,14 @@ class CardData(UserList[Card]):
             retval = self.generate_large_image()
         return retval
 
-    def generate_deck(self,
-                      levels: list[int] | None = [50]*4,
-                      locale: Literal["ja", "zh-TW", "en"] = "ja") -> PngImageFile:
+    def generate_deck(self, levels: list[int] | None = [50]*4, locale: str = "ja") -> PngImageFile:
         """Generates deck image with processing applied.
 
         Parameters
         ----------
         levels: Optional[List[int]]
             Cards' level.
-        locale: Literal["ja", "zh-TW", "en"]
+        locale: :class:`str`
             If a corresponding image is available, it is used.
 
         Returns
