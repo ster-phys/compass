@@ -10,9 +10,6 @@ jobs:
   get_abbreviations:
     runs-on: ubuntu-latest
 
-    env:
-      COMMIT_MESSAGE: commit-message.txt
-
     steps:
       - uses: actions/checkout@v3
 
@@ -35,17 +32,13 @@ jobs:
           echo $json | jq "." > $ABBS_JSON
 
       - name: Generate commit message
+        id: commit
         working-directory: .wiki
         run: |
-          echo "[actions] Update abbreviations json" > $COMMIT_MESSAGE
-          echo "" >> $COMMIT_MESSAGE
-          echo "" >> $COMMIT_MESSAGE
-          git log --after '$(date +"%Y-%m-%d +0000" --date "1 day ago")' --pretty='Co-authored-by: %an <%ae>' | uniq >> $COMMIT_MESSAGE
-          cat $COMMIT_MESSAGE
-
-      - name: Remove unneeded files
-        run: |
-          rm -rf .wiki
+          export BASE_MESSAGE="[actions] Update abbreviations json\n\n\n"
+          export CO_AUTHORS=$(git log --after '$(date +"%Y-%m-%d +0000" --date "1 day ago")' --pretty='Co-authored-by: %an <%ae>' | sort | uniq)
+          export COMMIT_MESSAGE="$BASE_MESSAGE""$CO_AUTHORS"
+          echo "COMMIT_MESSAGE="$COMMIT_MESSAGE"" >> $GITHUB_OUTPUT
 
       - name: Stage and count changes
         id: staging
@@ -59,5 +52,9 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add compass/data/abbs.json
-          git commit -F $COMMIT_MESSAGE
+          echo -e "${{ steps.commit.outputs.COMMIT_MESSAGE }}" | git commit -F -
           git push
+
+      - name: Remove unneeded files
+        run: |
+          rm -rf .wiki
