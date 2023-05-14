@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-05-10 06:31+0000\n"
+"POT-Creation-Date: 2023-05-14 06:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr "gunner"
 msgid "タンク"
 msgstr "tank"
 
-#: compass/stage.py:179
+#: compass/stage.py:178
 msgid "選択"
 msgstr "select"
 
