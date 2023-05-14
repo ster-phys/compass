@@ -22,12 +22,12 @@ jobs:
 
       - name: Run generating .mo scripts
         run: |
-          python i18n/msgfmt.py compass/locale/*/LC_MESSAGES/*.po
+          ls -d compass/locale/*/LC_MESSAGES/*.po | grep -v "en-GB" | xargs python i18n/msgfmt.py
 
       - name: Stage and count changes
         id: staging
         run: |
-          git add compass/locale/*/LC_MESSAGES/*.mo
+          ls -d compass/locale/*/LC_MESSAGES/*.mo | grep -v "en-GB" | xargs git add
           echo "NUM_OF_STAGED=$(git diff --staged --name-only | wc -l)" >> $GITHUB_OUTPUT
 
       - name: Push to master
@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add compass/locale/*/LC_MESSAGES/*.mo
+          ls -d compass/locale/*/LC_MESSAGES/*.mo | grep -v "en-GB" | xargs git add
           git commit -m "[actions] Update mo files"
           git push
