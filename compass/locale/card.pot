@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2023-05-14 04:06+0000\n"
+"POT-Creation-Date: 2023-05-22 09:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1839,7 +1839,7 @@ msgid "被ダメージを ライフに変換する（3秒間）"
 msgstr ""
 
 #: 455319
-msgid "【ハイスペックニート】マルコス’55"
+msgid "【ハイスペックニート】マルコス'55"
 msgstr ""
 
 msgid "みんなのチャットの色を
@@ -2749,7 +2749,7 @@ msgid "罪深き堕天使 嗤う堕天使 背負う月は罪か罰か それと�
 msgstr ""
 
 #: 455447
-msgid "【パーフェクトニート】マルコス’55"
+msgid "【パーフェクトニート】マルコス'55"
 msgstr ""
 
 msgid "リリカちゃんについて知りたい？なら まずは「魔法少女リリカ☆ルルカ5周年記念フィギュア付きBlu-rayBOX」を貸……"
@@ -3027,69 +3027,69 @@ msgstr ""
 msgid "不思議の支配者「ハートの女王さま」"
 msgstr ""
 
-msgid ""
+msgid "敵が通れない壁を 6秒間設置する (接触でスタン2秒)"
 msgstr ""
 
 #: 758768
 msgid "不思議の王子様「白馬の晴斗くん」"
 msgstr ""
 
-msgid ""
+msgid "前方の味方のライフを70%回復 +状態異常回復"
 msgstr ""
 
 #: 758770
 msgid "不思議の一休み「トランプちゃん」"
 msgstr ""
 
-msgid ""
+msgid "前方の敵を 遠くに弾き飛ばす"
 msgstr ""
 
 #: 758772
 msgid "不思議の籠球部「白秋晴斗くん」"
 msgstr ""
 
-msgid ""
+msgid "周囲の敵に 防御力無視の攻撃 (小ダメージ)"
 msgstr ""
 
 #: 758775
-msgid "不思議の美術部「玄冬淡雪＆朱夏夜雨ちゃん」"
+msgid "不思議の美術部「玄冬淡雪&朱夏夜雨ちゃん」"
 msgstr ""
 
-msgid ""
+msgid "前方敵の全行動速度を 2秒間 大ダウン"
 msgstr ""
 
 #: 758781
-msgid "蜘蛛縫組Ж面従相談役 千切 常影"
+msgid "蜘蛛縫組 Ж 面従相談役 千切 常影"
 msgstr ""
 
-msgid ""
+msgid "持続する大ダメージエリア発生の 罠を設置(20秒間)"
 msgstr ""
 
 #: 758783
 msgid "蜘蛛縫組 Ж 三代目組長 蜘蛛縫 正太郎"
 msgstr ""
 
-msgid ""
+msgid "周囲の敵を 5秒間中心に引き寄せる 罠を設置(20秒間)"
 msgstr ""
 
 #: 758784
 msgid "蜘蛛縫組 Ж 組本部 裁縫会合室"
 msgstr ""
 
-msgid ""
+msgid "敵の防御力が超低下する 罠を設置(20秒間)"
 msgstr ""
 
 #: 758785
 msgid "蜘蛛縫組 Ж 舎弟衆 万亀川/蛇ノ目/虎山"
 msgstr ""
 
-msgid ""
+msgid "敵の視界を4秒間奪う 罠を設置(20秒間)"
 msgstr ""
 
 #: 758786
 msgid "蜘蛛縫組 Ж 愛してマスコット ウサ太郎"
 msgstr ""
 
-msgid ""
+msgid "敵に小ダメージを与える 罠を設置(20秒間)"
 msgstr ""
 
