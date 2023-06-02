@@ -5,7 +5,7 @@
     "role": "アタッカー",
     "atk": 1.4,
     "def": 0.75,
-    "phs": 0.95,
+    "phs": 1.0,
     "setname": "rem",
     "speed": 2.54,
     "ultname": "レムは鬼がかってます！",
