@@ -24,7 +24,7 @@ __title__ = "compass"
 __author__ = "ster"
 __license__ = "GPL-3.0"
 __copyright__ = "Copyright 2021-present ster"
-__version__ = "1.2.1"
+__version__ = "1.3.0a"
 
 
 from .utils import _install_default_translator
